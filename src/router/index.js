@@ -73,53 +73,53 @@ export const constantRouterMap = [
   {
     path: '/biogen-events',
     component: Layout,
-    redirect: 'noredirect',
+    redirect: '/biogen-events/index',
     name: 'biogenEvents',
     meta: {
-      title: 'Biogen Events',
+      title: 'Biogen',
       icon: 'table'
     },
     children: [
       {
-        path: 'all',
+        path: 'index',
         component: () => import('@/views/events/biogen/index'),
         name: 'biogenEventIndex',
-        meta: { title: 'Events', icon: 'table2' }
-      },
-      {
-        path: 'create-event',
-        component: () => import('@/views/events/biogen/create'),
-        name: 'biogenCreateEvent',
-        meta: { title: 'Create', icon: 'form' }
+        meta: { title: 'Biogen Events', icon: 'table2' }
       }
     ]
   },
-
+  {
+    path: '/biogen-events/create-event',
+    component: () => import('@/views/events/biogen/create'),
+    hidden: true,
+    name: 'biogenCreateEvent',
+    meta: { title: 'Create', icon: 'form' }
+  },
   {
     path: '/sunovion-events',
     component: Layout,
-    redirect: 'noredirect',
+    redirect: '/sunovion-events/index',
     name: 'sunovionEvents',
     meta: {
-      title: 'Sunovion Events',
+      title: 'Sunovion',
       icon: 'table'
     },
     children: [
       {
-        path: 'all',
+        path: 'index',
         component: () => import('@/views/events/sunovion/index'),
         name: 'sunovionEventIndex',
-        meta: { title: 'Events', icon: 'table2' }
-      },
-      {
-        path: 'create-event',
-        component: () => import('@/views/events/sunovion/create'),
-        name: 'sunovionCreateEvent',
-        meta: { title: 'Create', icon: 'form' }
+        meta: { title: 'Sunovion Events', icon: 'table2' }
       }
     ]
   },
-
+  {
+    path: '/sunovion-events/create-event',
+    component: () => import('@/views/events/sunovion/create'),
+    hidden: true,
+    name: 'sunovionCreateEvent',
+    meta: { title: 'Create', icon: 'form' }
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

@@ -1,5 +1,5 @@
 import { login, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getUsername, removeUsername, setUsername } from '@/utils/auth'
 
 const user = {
   state: {
@@ -35,6 +35,7 @@ const user = {
         login(username, userInfo.password).then(response => {
           const data = response
           setToken(data.token)
+          setUsername(username)
           commit('SET_TOKEN', data.token)
           commit('SET_USERNAME', username)
           resolve()
@@ -46,7 +47,8 @@ const user = {
 
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.username).then(response => {
+        const username = getUsername()
+        getInfo(username).then(response => {
           const data = response
           commit('SET_ROLE', data.role)
           commit('SET_NAME', data.fullname)
@@ -72,6 +74,7 @@ const user = {
         commit('SET_TOKEN', '')
         commit('SET_ROLE', '')
         removeToken()
+        removeUsername()
         resolve()
       })
     },
@@ -80,6 +83,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         commit('SET_ROLE', '')
+        removeUsername()
         removeToken()
         resolve()
       })

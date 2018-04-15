@@ -4,11 +4,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="Table Title"
                 v-model="listQuery.title">
       </el-input>
-      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance"
-                 placeholder="Importance">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">
-        </el-option>
-      </el-select>
+
       <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="type">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'"
                    :value="item.key">
@@ -23,9 +19,6 @@
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
                  icon="el-icon-edit">Add
       </el-button>
-      <el-checkbox class="filter-item" style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">
-        Reviewer
-      </el-checkbox>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit
@@ -52,16 +45,7 @@
           <span>{{scope.row.author}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" v-if='showReviewer' align="center" label="Reviewer">
-        <template slot-scope="scope">
-          <span style='color:red;'>{{scope.row.reviewer}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="80px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n"></svg-icon>
-        </template>
-      </el-table-column>
+
 
       <el-table-column class-name="status-col" label="status" width="100">
         <template slot-scope="scope">
@@ -84,9 +68,9 @@
     </el-table>
 
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+      <el-pagination background @current-change="handleCurrentChange"
                      :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
-                     layout="total, sizes, prev, pager, next, jumper" :total="total">
+                     layout="total, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
@@ -99,7 +83,7 @@
   import { fetchList } from '@/api/biogenEvent'
 
   import waves from '@/directive/waves' // 水波纹指令
-  // import { parseTime } from '@/utils'
+  import { parseTime } from '@/utils'
 
   const calendarTypeOptions = [
     { key: 'CN', display_name: 'China' },
@@ -126,40 +110,30 @@
         listLoading: true,
         listQuery: {
           page: 1,
-          limit: 20,
-          importance: undefined,
           title: undefined,
-          type: undefined,
           sort: '+id'
         },
-        importanceOptions: [1, 2, 3],
         calendarTypeOptions,
         sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
         statusOptions: ['published', 'draft', 'deleted'],
-        showReviewer: false,
         temp: {
           id: undefined,
-          importance: 1,
           remark: '',
           timestamp: new Date(),
           title: '',
           type: '',
           status: 'published'
         },
-        dialogFormVisible: false,
-        dialogStatus: '',
         textMap: {
           update: 'Edit',
           create: 'Create'
         },
-        dialogPvVisible: false,
         pvData: [],
         rules: {
           type: [{ required: true, message: 'type is required', trigger: 'change' }],
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
           title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-        },
-        downloadLoading: false
+        }
       }
     },
     filters: {
@@ -191,10 +165,6 @@
         this.listQuery.page = 1
         this.getList()
       },
-      handleSizeChange(val) {
-        this.listQuery.limit = val
-        this.getList()
-      },
       handleCurrentChange(val) {
         this.listQuery.page = val
         this.getList()
@@ -209,7 +179,6 @@
       resetTemp() {
         this.temp = {
           id: undefined,
-          importance: 1,
           remark: '',
           timestamp: new Date(),
           title: '',
