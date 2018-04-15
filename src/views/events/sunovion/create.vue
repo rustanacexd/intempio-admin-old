@@ -1,0 +1,11 @@
+<template>
+    <h1>create sunovion event</h1>
+</template>
+
+<script>
+  export default {}
+</script>
+
+<style scoped>
+
+</style>
