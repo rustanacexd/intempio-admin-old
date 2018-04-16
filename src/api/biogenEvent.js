@@ -8,14 +8,14 @@ export function fetchList(query) {
   })
 }
 
-export function fetchBiogenEvent(eventId) {
+export function fetchEvent(eventId) {
   return request({
     url: '/biogen-events/' + eventId + '/',
     method: 'get'
   })
 }
 
-export function createBiogenEvent(data) {
+export function createEvent(data) {
   return request({
     url: '/biogen-events/',
     method: 'post',
@@ -23,7 +23,7 @@ export function createBiogenEvent(data) {
   })
 }
 
-export function updateBiogenEvent(eventId, data) {
+export function updateEvent(eventId, data) {
   return request({
     url: '/biogen-events/' + eventId + '/',
     method: 'put',
@@ -31,7 +31,7 @@ export function updateBiogenEvent(eventId, data) {
   })
 }
 
-export function deleteBiogenEvent(eventId) {
+export function deleteEvent(eventId) {
   return request({
     url: '/biogen-events/' + eventId + '/',
     method: 'delete'

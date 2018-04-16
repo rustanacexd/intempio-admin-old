@@ -24,56 +24,30 @@ import Layout from '../views/layout/Layout'
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/401', component: () => import('@/views/401'), hidden: true },
 
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/dashboard/',
+    name: 'Dashboard Redirect',
+    hidden: true
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    redirect: 'noredirect',
     name: 'Dashboard',
-    hidden: true,
     children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      path: '',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
   {
     path: '/biogen-events',
     component: Layout,
-    redirect: '/biogen-events/index',
+    redirect: '/biogen-events/',
     name: 'biogenEvents',
     meta: {
       title: 'Biogen',
@@ -81,7 +55,7 @@ export const constantRouterMap = [
     },
     children: [
       {
-        path: 'index',
+        path: '',
         component: () => import('@/views/events/biogen/index'),
         name: 'biogenEventIndex',
         meta: { title: 'Biogen Events', icon: 'table2' }
@@ -98,7 +72,7 @@ export const constantRouterMap = [
   {
     path: '/sunovion-events',
     component: Layout,
-    redirect: '/sunovion-events/index',
+    redirect: '/sunovion-events/',
     name: 'sunovionEvents',
     meta: {
       title: 'Sunovion',
@@ -106,7 +80,7 @@ export const constantRouterMap = [
     },
     children: [
       {
-        path: 'index',
+        path: '',
         component: () => import('@/views/events/sunovion/index'),
         name: 'sunovionEventIndex',
         meta: { title: 'Sunovion Events', icon: 'table2' }

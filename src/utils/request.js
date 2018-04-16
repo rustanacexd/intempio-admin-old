@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // Create axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
+  baseURL: process.env.BASE_API, // Api base_url
   timeout: 15000 // Request timeout
 })
 
@@ -28,7 +28,7 @@ service.interceptors.response.use(
      * The code is non-200 error-free
      */
     const code = response.status
-    if (code !== 200) {
+    if (code !== 200 && code !== 204) {
       Message({
         message: response.statusText,
         type: 'error',
