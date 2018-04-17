@@ -1,12 +1,12 @@
 <template>
-  <event-detail :is-edit='true' :event-id="this.$route.params.eventId"></event-detail>
+  <event-form :is-edit='true' :event-id="this.$route.params.eventId"></event-form>
 </template>
 
 <script>
-  import EventDetail from './components/EventDetail'
+  import EventForm from './components/EventForm'
 
   export default {
-    components: { EventDetail }
+    components: { EventForm }
   }
 </script>
 

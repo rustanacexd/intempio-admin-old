@@ -1,12 +1,12 @@
 <template>
-  <event-detail :is-edit='false'></event-detail>
+  <event-form :is-edit='false'></event-form>
 </template>
 
 <script>
-  import EventDetail from './components/EventDetail'
+  import EventForm from './components/EventForm'
 
   export default {
-    components: { EventDetail }
+    components: { EventDetail: EventForm }
   }
 </script>
 
