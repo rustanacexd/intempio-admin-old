@@ -63,11 +63,24 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/biogen-events/create-event',
-    component: () => import('@/views/events/biogen/create'),
+    path: '/biogen-events',
+    component: Layout,
+    redirect: '/biogen-events/',
     hidden: true,
-    name: 'biogenCreateEvent',
-    meta: { title: 'Create', icon: 'form' }
+    children: [
+      {
+        path: 'create-event',
+        component: () => import('@/views/events/biogen/create'),
+        name: 'biogenCreateEvent',
+        meta: { title: 'Create', icon: 'form' }
+      },
+      {
+        path: 'edit-event/:eventId',
+        component: () => import('@/views/events/biogen/edit'),
+        name: 'biogenEditEvent',
+        meta: { title: 'Edit', icon: 'form' }
+      }
+    ]
   },
   {
     path: '/sunovion-events',

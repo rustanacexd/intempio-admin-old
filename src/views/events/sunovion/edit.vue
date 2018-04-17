@@ -1,5 +1,5 @@
 <template>
-    <h1>edit sunovion event</h1>
+  <h1>edit sunovion event</h1>
 </template>
 
 <script>

@@ -1,11 +1,12 @@
 <template>
-  <h1>edit event</h1>
+  <event-detail :is-edit='true' :event-id="this.$route.params.eventId"></event-detail>
 </template>
 
 <script>
-  export default {}
+  import EventDetail from './components/EventDetail'
+
+  export default {
+    components: { EventDetail }
+  }
 </script>
 
-<style scoped>
-
-</style>

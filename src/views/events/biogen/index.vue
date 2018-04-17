@@ -154,7 +154,8 @@
           this.listLoading = true
           deleteEvent(row.id).then(() => {
             this.listLoading = false
-            this.list.splice(index, 1)
+            // this.list.splice(index, 1)
+            this.getList()
             this.$notify({
               title: 'Success',
               message: `deleted ${row.name}`,
@@ -172,10 +173,10 @@
         })
       },
       handleCreate() {
+        this.$router.push({ name: 'biogenCreateEvent' })
       },
       handleUpdate(row) {
-        // this.temp = Object.assign({}, row) // copy obj
-        console.log(row)
+        this.$router.push({ name: 'biogenEditEvent', params: { eventId: row.id }})
       }
     }
   }

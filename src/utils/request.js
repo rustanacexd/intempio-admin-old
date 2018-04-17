@@ -28,7 +28,7 @@ service.interceptors.response.use(
      * The code is non-200 error-free
      */
     const code = response.status
-    if (code !== 200 && code !== 204) {
+    if (code !== 200 && code !== 204 && code !== 201) {
       Message({
         message: response.statusText,
         type: 'error',
@@ -54,12 +54,36 @@ service.interceptors.response.use(
     }
   },
   error => {
+    const { response } = error
+    const duration = 5 * 1000
+
+    if (response.status === 400) {
+      Message({
+        message: response.data['non_field_errors'][0],
+        type: 'error',
+        duration
+      })
+    } else if (response.status === 403) {
+      Message({
+        message: 'Invalid Token please reload the page and relogin',
+        type: 'error',
+        duration
+      })
+    } else if (response.status === 500) {
+      Message({
+        message: error.message + '- Please reload the page or contact the developer',
+        type: 'error',
+        duration
+      })
+    } else {
+      Message({
+        message: error.message,
+        type: 'error',
+        duration
+      })
+    }
+
     console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
     return Promise.reject(error)
   }
 )
