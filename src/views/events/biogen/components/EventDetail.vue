@@ -1,9 +1,10 @@
 <template>
   <div class="form-container">
     <div class="form-main-container">
-      <el-form ref="form" :model="form" :rules="rules" size="small" class="form-container">
+      <el-form ref="form" :model="form" :rules="rules" size="small" class="form-container"
+               v-loading.fullscreen.lock="loading">
         <el-tabs tab-position="left">
-          <el-tab-pane label="Event Details">
+          <el-tab-pane label="Event">
             <el-row>
               <el-col :span="12">
                 <h5 class="form--label">Requestor Info</h5>
@@ -209,7 +210,7 @@
             </el-row>
           </el-tab-pane>
 
-          <el-tab-pane label="Project Details">Project</el-tab-pane>
+          <el-tab-pane label="Project">Project</el-tab-pane>
           <el-tab-pane label="Contact(s)">Contact(s)</el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">

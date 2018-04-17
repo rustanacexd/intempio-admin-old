@@ -65,20 +65,24 @@ a:hover {
   border-color: #dcdfe6
 }
 
+.page-component-up {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .12);
+  z-index: 5;
+}
 
-  .page-component-up {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    cursor: pointer;
-    transition: .3s;
-    box-shadow: 0 0 6px rgba(0, 0, 0, .12);
-    z-index: 5;
+.form-container {
+  position: relative;
+  .form-main-container {
+    padding: 40px 20px 20px 10px;
   }
+}
 
-  .form-container {
-    position: relative;
-    .form-main-container {
-      padding: 40px 45px 20px 20px;
-    }
-  }
+.form--label {
+  margin-top: 0;
+  margin-bottom: 15px;
+}

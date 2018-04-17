@@ -58,7 +58,7 @@ export const constantRouterMap = [
         path: '',
         component: () => import('@/views/events/biogen/index'),
         name: 'biogenEventIndex',
-        meta: { title: 'Biogen Events', icon: 'table2' }
+        meta: { title: 'Biogen', icon: 'table2' }
       }
     ]
   },
@@ -96,7 +96,7 @@ export const constantRouterMap = [
         path: '',
         component: () => import('@/views/events/sunovion/index'),
         name: 'sunovionEventIndex',
-        meta: { title: 'Sunovion Events', icon: 'table2' }
+        meta: { title: 'Sunovion', icon: 'table2' }
       }
     ]
   },
