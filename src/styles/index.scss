@@ -21,7 +21,7 @@ html {
   box-sizing: inherit;
 }
 
-div:focus{
+div:focus {
   outline: none;
 }
 
@@ -50,10 +50,35 @@ a:hover {
 }
 
 //main-container全局样式
-.app-main{
+.app-main {
   min-height: 100%
 }
 
 .app-container {
   padding: 20px;
 }
+
+.el-form-item.is-success .el-input__inner,
+.el-form-item.is-success .el-input__inner:focus,
+.el-form-item.is-success .el-textarea__inner,
+.el-form-item.is-success .el-textarea__inner:focus {
+  border-color: #dcdfe6
+}
+
+
+  .page-component-up {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .12);
+    z-index: 5;
+  }
+
+  .form-container {
+    position: relative;
+    .form-main-container {
+      padding: 40px 45px 20px 20px;
+    }
+  }
