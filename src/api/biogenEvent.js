@@ -1,8 +1,10 @@
 import request from '@/utils/request'
 
+const resourceURL = '/biogen-events/'
+
 export function fetchList(query) {
   return request({
-    url: '/biogen-events/',
+    url: resourceURL,
     method: 'get',
     params: query
   })
@@ -10,14 +12,14 @@ export function fetchList(query) {
 
 export function fetchEvent(eventId) {
   return request({
-    url: '/biogen-events/' + eventId + '/',
+    url: resourceURL + eventId + '/',
     method: 'get'
   })
 }
 
 export function createEvent(data) {
   return request({
-    url: '/biogen-events/',
+    url: resourceURL,
     method: 'post',
     data
   })
@@ -25,7 +27,7 @@ export function createEvent(data) {
 
 export function updateEvent(eventId, data) {
   return request({
-    url: '/biogen-events/' + eventId + '/',
+    url: resourceURL + eventId + '/',
     method: 'put',
     data
   })
@@ -33,7 +35,14 @@ export function updateEvent(eventId, data) {
 
 export function deleteEvent(eventId) {
   return request({
-    url: '/biogen-events/' + eventId + '/',
+    url: resourceURL + eventId + '/',
     method: 'delete'
+  })
+}
+
+export function fetchOptions() {
+  return request({
+    url: resourceURL,
+    method: 'options'
   })
 }

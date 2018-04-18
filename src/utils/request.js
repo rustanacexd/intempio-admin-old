@@ -65,7 +65,7 @@ service.interceptors.response.use(
       })
     } else if (response.status === 403) {
       Message({
-        message: 'Invalid Token please reload the page and relogin',
+        message: 'Invalid Token please reload the page and re login',
         type: 'error',
         duration
       })

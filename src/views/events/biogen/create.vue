@@ -6,7 +6,7 @@
   import EventForm from './components/EventForm'
 
   export default {
-    components: { EventDetail: EventForm }
+    components: { EventForm }
   }
 </script>
 

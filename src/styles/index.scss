@@ -80,9 +80,15 @@ a:hover {
   .form-main-container {
     padding: 40px 20px 20px 10px;
   }
+
+  .el-select.el-select--small {
+    width: 100%;
+  }
 }
 
 .form--label {
   margin-top: 0;
   margin-bottom: 15px;
 }
+
+

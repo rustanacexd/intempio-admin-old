@@ -50,9 +50,9 @@
       <el-table-column label="actions" width="280" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">edit</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row, scope.$index)">delete</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
           <el-button v-if="scope.row.status === 'reviewed'" size="mini" type="success"
-                     @click="handleDelete(scope.row)">submit to kf
+                     @click="alert('not implemented yet')">submit to kf
           </el-button>
         </template>
       </el-table-column>
@@ -145,7 +145,7 @@
         this.listQuery.page = val
         this.getList()
       },
-      handleDelete(row, index) {
+      handleDelete(row) {
         this.$confirm('This will permanently delete the event. Continue?', 'Warning', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
@@ -154,7 +154,6 @@
           this.listLoading = true
           deleteEvent(row.id).then(() => {
             this.listLoading = false
-            // this.list.splice(index, 1)
             this.getList()
             this.$notify({
               title: 'Success',

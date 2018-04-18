@@ -2,13 +2,15 @@
   <div class="form-container">
     <div class="form-main-container">
       <el-form ref="form" :model="form" :rules="rules" size="small" class="form-container"
-               v-loading.fullscreen.lock="loading">
+               v-loading.fullscreen.lock="loading" label-position="top">
         <el-tabs tab-position="left">
           <el-tab-pane label="Event">
-            <event-form-fields :form="form"></event-form-fields>
+            <event-form-fields :form="form"/>
           </el-tab-pane>
 
-          <el-tab-pane label="Project">Project</el-tab-pane>
+          <el-tab-pane label="Project">
+            <event-project-fields :form="form.project"/>
+          </el-tab-pane>
           <el-tab-pane label="Contact(s)">Contact(s)</el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">
@@ -24,8 +26,9 @@
 </template>
 
 <script>
-  import { createEvent, fetchEvent, updateEvent } from '@/api/biogenEvent'
+  import { createEvent, fetchEvent, updateEvent, fetchOptions } from '@/api/biogenEvent'
   import EventFormFields from './EventFormFields'
+  import EventProjectFields from './EventProjectFields'
 
   const defaultForm = {
     name: '',
@@ -45,12 +48,24 @@
     eod_webcast: '',
     ms_sma: '',
     slide_deck_name: '',
-    slide_deck_id: ''
+    slide_deck_id: '',
+    project: {
+      project_code: '',
+      client: '',
+      fulfilled_by: '',
+      sow_status: '',
+      invite_sent_by: '',
+      invite_type: '',
+      invoice_sheet: '',
+      run_sheet: false,
+      reporting: false,
+      notes: ''
+    }
   }
 
   export default {
     name: 'biogenEventDetail',
-    components: { EventFormFields },
+    components: { EventFormFields, EventProjectFields },
     props: {
       isEdit: {
         type: Boolean,
