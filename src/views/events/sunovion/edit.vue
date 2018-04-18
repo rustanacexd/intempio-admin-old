@@ -1,11 +1,12 @@
 <template>
-  <h1>edit sunovion event</h1>
+  <event-form :is-edit='true' :event-id="this.$route.params.eventId"></event-form>
 </template>
 
 <script>
-  export default {}
+  import EventForm from './components/EventForm'
+
+  export default {
+    components: { EventForm }
+  }
 </script>
 
-<style scoped>
-
-</style>

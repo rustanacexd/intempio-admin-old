@@ -1,11 +1,12 @@
 <template>
-    <h1>create sunovion event</h1>
+  <event-form :is-edit='false'></event-form>
 </template>
 
 <script>
-  export default {}
+  import EventForm from './components/EventForm'
+
+  export default {
+    components: { EventForm }
+  }
 </script>
 
-<style scoped>
-
-</style>

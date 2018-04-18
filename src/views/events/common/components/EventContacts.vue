@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(contact, index) in form" :key="index" :gutter="20">
-      <el-row style="padding-top: 20px">
+      <el-row style="padding-bottom: 10px; padding-top: 10px">
         <el-col :lg="12">
           <el-form-item :prop="'contacts.' + index + '.contact_type'">
             <el-select v-model="contact.contact_type" placeholder="Contact Type">
@@ -11,7 +11,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20" style="border-bottom: 1px dotted gray">
+      <el-row :gutter="20">
         <el-col :lg="6">
           <el-form-item :prop="'contacts.' + index + '.name'"
                         :rules="[{required: true,message: 'This field is required.',trigger: 'change'}]">

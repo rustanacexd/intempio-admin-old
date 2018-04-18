@@ -101,11 +101,24 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/sunovion-events/create-event',
-    component: () => import('@/views/events/sunovion/create'),
+    path: '/sunovion-events',
+    component: Layout,
+    redirect: '/sunovion-events/',
     hidden: true,
-    name: 'sunovionCreateEvent',
-    meta: { title: 'Create', icon: 'form' }
+    children: [
+      {
+        path: 'create-event',
+        component: () => import('@/views/events/sunovion/create'),
+        name: 'sunovionCreateEvent',
+        meta: { title: 'Create', icon: 'form' }
+      },
+      {
+        path: 'edit-event/:eventId',
+        component: () => import('@/views/events/sunovion/edit'),
+        name: 'sunovionEditEvent',
+        meta: { title: 'Edit', icon: 'form' }
+      }
+    ]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]

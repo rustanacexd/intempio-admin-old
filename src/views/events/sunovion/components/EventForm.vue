@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import { createEvent, fetchEvent, updateEvent } from '@/api/biogenEvent'
+  import { createEvent, fetchEvent, updateEvent } from '@/api/sunovionEvent'
   import EventFormFields from './EventFormFields'
   import EventProject from '../../common/components/EventProject'
   import EventContacts from '../../common/components/EventContacts'
@@ -48,17 +48,15 @@
     date: '',
     time: '',
     period: '',
-    timezone: 'EST',
     duration: '',
     presenters: [],
     participants_count: 10,
     presenters_count: 1,
-    program_meeting_id: '',
+    producer_required: false,
+    rehearsal_required: false,
+    recording_required: false,
+    technology_check: false,
     notes: '',
-    eod_webcast: '',
-    ms_sma: '',
-    slide_deck_name: '',
-    slide_deck_id: '',
     project: {
       project_code: '',
       client: '',
@@ -75,7 +73,6 @@
   }
 
   export default {
-    name: 'biogenEventDetail',
     components: { EventFormFields, EventProject, EventContacts },
     props: {
       isEdit: {
