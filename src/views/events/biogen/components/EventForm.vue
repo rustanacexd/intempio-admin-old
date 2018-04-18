@@ -3,15 +3,17 @@
     <div class="form-main-container">
       <el-form ref="form" :model="eventObj" :rules="rules" size="small" class="form-container"
                v-loading.fullscreen.lock="loading" label-position="top">
-        <el-tabs tab-position="left">
+        <el-tabs tab-position="left" value="internal">
           <el-tab-pane label="Event">
             <event-form-fields :form="eventObj"/>
           </el-tab-pane>
 
-          <el-tab-pane label="Project">
-            <event-project-fields :form="eventObj.project"/>
+          <el-tab-pane label="Internal" name="internal">
+            <h4>Project Info</h4>
+            <event-project :form="eventObj.project"/>
+            <h4>Contacts</h4>
+            <event-contacts :form="eventObj.contacts"/>
           </el-tab-pane>
-          <el-tab-pane label="Contact(s)">Contact(s)</el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">
           <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large" v-if="isEdit">
@@ -31,7 +33,8 @@
 <script>
   import { createEvent, fetchEvent, updateEvent } from '@/api/biogenEvent'
   import EventFormFields from './EventFormFields'
-  import EventProjectFields from '../../project/components/EventProjectFields'
+  import EventProject from '../../common/components/EventProject'
+  import EventContacts from '../../common/components/EventContacts'
 
   const defaultEventObj = {
     name: '',
@@ -63,12 +66,13 @@
       run_sheet: false,
       reporting: false,
       notes: ''
-    }
+    },
+    contacts: []
   }
 
   export default {
     name: 'biogenEventDetail',
-    components: { EventFormFields, EventProjectFields },
+    components: { EventFormFields, EventProject, EventContacts },
     props: {
       isEdit: {
         type: Boolean,
@@ -126,6 +130,7 @@
         this.eventObj = Object.assign({}, defaultEventObj)
       }
     },
+
     methods: {
       getEvent() {
         fetchEvent(this.eventId).then(data => {

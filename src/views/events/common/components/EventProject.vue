@@ -24,16 +24,15 @@
           </el-select>
         </el-form-item>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
+
       <el-col :lg="4">
         <el-form-item prop="sow_status" label="SOW Status">
           <el-select v-model="form.sow_status">
             <el-option v-for="status in sowStatus" :label="status" :value="status" :key="status"/>
           </el-select>
         </el-form-item>
-
       </el-col>
+
       <el-col :lg="4">
         <el-form-item prop="invite_sent_by" label="Invite sent by">
           <el-select v-model="form.invite_sent_by">
@@ -49,7 +48,9 @@
           </el-select>
         </el-form-item>
       </el-col>
+
     </el-row>
+
     <el-row :gutter="20">
       <el-col :lg="10">
         <el-form-item prop="invoice_sheet" label="Invoice sheet">
@@ -126,7 +127,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

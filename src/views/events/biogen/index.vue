@@ -26,13 +26,13 @@
               style="width: 100%">
       <el-table-column align="center" label="Event ID" width="300">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.id}}</span>
+          <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.id}}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="Event Name">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.name}}</span>
+          <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
