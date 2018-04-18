@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="project_code" label="Project Code">
           <el-select v-model="form.project_code">
             <el-option v-for="project in projectCodes" :label="project" :value="project" :key="project"/>
@@ -9,7 +9,7 @@
         </el-form-item>
 
       </el-col>
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="client" label="Client">
           <el-select v-model="form.client">
             <el-option v-for="client in clients" :label="client" :value="client" :key="client"/>
@@ -17,7 +17,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="fulfilled_by" label="Fulfilled by">
           <el-select v-model="form.fulfilled_by">
             <el-option v-for="client in internalClients" :label="client" :value="client" :key="client"/>
@@ -26,7 +26,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="sow_status" label="SOW Status">
           <el-select v-model="form.sow_status">
             <el-option v-for="status in sowStatus" :label="status" :value="status" :key="status"/>
@@ -34,7 +34,7 @@
         </el-form-item>
 
       </el-col>
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="invite_sent_by" label="Invite sent by">
           <el-select v-model="form.invite_sent_by">
             <el-option v-for="client in internalClients" :label="client" :value="client" :key="client"/>
@@ -42,7 +42,7 @@
         </el-form-item>
       </el-col>
 
-      <el-col :lg="8">
+      <el-col :lg="4">
         <el-form-item prop="invite_type" label="Invite type">
           <el-select v-model="form.invite_type">
             <el-option v-for="invite in inviteType" :label="invite" :value="invite" :key="invite"/>
@@ -51,18 +51,18 @@
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :lg="8">
+      <el-col :lg="10">
         <el-form-item prop="invoice_sheet" label="Invoice sheet">
           <el-input v-model="form.invoice_sheet"/>
         </el-form-item>
       </el-col>
-      <el-col :lg="8">
+      <el-col :lg="2">
         <el-form-item prop="run_sheet" label="Run sheet?">
           <el-checkbox v-model="form.run_sheet"/>
         </el-form-item>
       </el-col>
 
-      <el-col :lg="8">
+      <el-col :lg="2">
         <el-form-item prop="reporting" label="Reporting?">
           <el-checkbox v-model="form.reporting"/>
         </el-form-item>

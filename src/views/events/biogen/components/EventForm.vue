@@ -1,21 +1,24 @@
 <template>
   <div class="form-container">
     <div class="form-main-container">
-      <el-form ref="form" :model="form" :rules="rules" size="small" class="form-container"
+      <el-form ref="form" :model="eventObj" :rules="rules" size="small" class="form-container"
                v-loading.fullscreen.lock="loading" label-position="top">
         <el-tabs tab-position="left">
           <el-tab-pane label="Event">
-            <event-form-fields :form="form"/>
+            <event-form-fields :form="eventObj"/>
           </el-tab-pane>
 
           <el-tab-pane label="Project">
-            <event-project-fields :form="form.project"/>
+            <event-project-fields :form="eventObj.project"/>
           </el-tab-pane>
           <el-tab-pane label="Contact(s)">Contact(s)</el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">
-          <el-button type="primary " @click="submitForm" icon="el-icon-upload2" size="large">
-            {{ isEdit ? 'Update' : 'Submit'}} Event
+          <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large" v-if="isEdit">
+            Update Event
+          </el-button>
+          <el-button type="primary " @click="handleCreate" icon="el-icon-upload2" size="large" v-else>
+            Create Event
           </el-button>
         </el-form-item>
       </el-form>
@@ -26,11 +29,11 @@
 </template>
 
 <script>
-  import { createEvent, fetchEvent, updateEvent, fetchOptions } from '@/api/biogenEvent'
+  import { createEvent, fetchEvent, updateEvent } from '@/api/biogenEvent'
   import EventFormFields from './EventFormFields'
-  import EventProjectFields from './EventProjectFields'
+  import EventProjectFields from '../../project/components/EventProjectFields'
 
-  const defaultForm = {
+  const defaultEventObj = {
     name: '',
     phone: '',
     email: '',
@@ -99,7 +102,7 @@
         }, 0)
       }
       return {
-        form: Object.assign({}, defaultForm),
+        eventObj: Object.assign({}, defaultEventObj),
         loading: false,
         rules: {
           requestor_name: [requiredValidator],
@@ -120,45 +123,64 @@
       if (this.isEdit) {
         this.getEvent()
       } else {
-        this.form = Object.assign({}, defaultForm)
+        this.eventObj = Object.assign({}, defaultEventObj)
       }
     },
     methods: {
       getEvent() {
         fetchEvent(this.eventId).then(data => {
-          this.form = data
-          if (this.form.presenters == null) this.form.presenters = []
+          this.eventObj = data
+          if (this.eventObj.project == null) this.eventObj.project = Object.assign({}, defaultEventObj.project)
+          if (this.eventObj.presenters == null) this.eventObj.presenters = []
         })
       },
-      submitForm() {
+      handleUpdate() {
         this.$refs.form.validate(success => {
           if (success) {
             this.loading = true
-            const promise = this.isEdit ? updateEvent(this.eventId, this.form) : createEvent(this.form)
-            const notificationText = this.isEdit ? 'updated' : 'submitted'
-
-            promise.then(() => {
-              this.loading = false
-              this.$notify({
-                title: 'Success',
-                message: `Successfully ${notificationText} event.`,
-                type: 'success',
-                duration: 3000
+            updateEvent(this.eventId, this.eventObj)
+              .then(() => {
+                this.loading = false
+                this.notifySuccess('Successfully updated event')
               })
-              if (!this.isEdit) this.resetForm()
-            })
           } else {
-            this.$notify({
-              title: 'Error',
-              message: 'Some required fields are missing.',
-              type: 'error',
-              duration: 3000
-            })
+            this.notifyError()
+          }
+        })
+      },
+      handleCreate() {
+        this.$refs.form.validate(success => {
+          if (success) {
+            this.loading = true
+            createEvent(this.eventObj)
+              .then(() => {
+                this.loading = false
+                this.resetForm()
+                this.notifySuccess('Successfully created event')
+              })
+          } else {
+            this.notifyError()
           }
         })
       },
       resetForm() {
         this.$refs.form.resetFields()
+      },
+      notifyError() {
+        this.$notify({
+          title: 'Error',
+          message: 'Some required fields are missing.',
+          type: 'error',
+          duration: 3000
+        })
+      },
+      notifySuccess(notificationText) {
+        this.$notify({
+          title: 'Success',
+          message: notificationText,
+          type: 'success',
+          duration: 3000
+        })
       }
     }
   }
