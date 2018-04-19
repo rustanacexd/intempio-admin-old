@@ -165,6 +165,23 @@
       </el-col>
     </el-row>
 
+    <el-row>
+      <el-col :span="12">
+        <h5 class="form--label">Status</h5>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :lg="12">
+        <el-form-item prop="status">
+          <el-select v-model="form.status" placeholder="(required)">
+            <el-option label="new" value="new"/>
+            <el-option label="reviewed" value="reviewed"/>
+            <el-option label="accepted" value="accepted"/>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

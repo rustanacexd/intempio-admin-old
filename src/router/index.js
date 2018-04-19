@@ -58,7 +58,7 @@ export const constantRouterMap = [
         path: '',
         component: () => import('@/views/events/biogen/index'),
         name: 'biogenEventIndex',
-        meta: { title: 'Biogen', icon: 'table2' }
+        meta: { title: 'Biogen', icon: 'table' }
       }
     ]
   },
@@ -96,7 +96,7 @@ export const constantRouterMap = [
         path: '',
         component: () => import('@/views/events/sunovion/index'),
         name: 'sunovionEventIndex',
-        meta: { title: 'Sunovion', icon: 'table2' }
+        meta: { title: 'Sunovion', icon: 'table' }
       }
     ]
   },
@@ -116,6 +116,44 @@ export const constantRouterMap = [
         path: 'edit-event/:eventId',
         component: () => import('@/views/events/sunovion/edit'),
         name: 'sunovionEditEvent',
+        meta: { title: 'Edit', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/projects',
+    component: Layout,
+    redirect: '/projects',
+    name: 'projects',
+    meta: {
+      title: 'Projects',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/events/projects/index'),
+        name: 'projectEventIndex',
+        meta: { title: 'Projects', icon: 'table2' }
+      }
+    ]
+  },
+  {
+    path: '/projects',
+    component: Layout,
+    redirect: '/projects',
+    hidden: true,
+    children: [
+      {
+        path: 'create-project',
+        component: () => import('@/views/events/projects/create'),
+        name: 'createProject',
+        meta: { title: 'Create', icon: 'form' }
+      },
+      {
+        path: 'edit-project/:projectCode',
+        component: () => import('@/views/events/projects/edit'),
+        name: 'editProject',
         meta: { title: 'Edit', icon: 'form' }
       }
     ]

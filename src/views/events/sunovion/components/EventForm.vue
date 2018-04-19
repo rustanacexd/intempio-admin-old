@@ -57,6 +57,7 @@
     recording_required: false,
     technology_check: false,
     notes: '',
+    status: '',
     project: {
       project_code: '',
       client: '',

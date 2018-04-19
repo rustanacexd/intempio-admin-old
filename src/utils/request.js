@@ -57,13 +57,7 @@ service.interceptors.response.use(
     const { response } = error
     const duration = 5 * 1000
 
-    if (response.status === 400) {
-      Message({
-        message: response.data['non_field_errors'][0],
-        type: 'error',
-        duration
-      })
-    } else if (response.status === 403) {
+    if (response.status === 403) {
       Message({
         message: 'Invalid Token please reload the page and re login',
         type: 'error',
@@ -84,6 +78,8 @@ service.interceptors.response.use(
     }
 
     console.log('err' + error)// for debug
+    console.log(error.message)
+    console.log(response.data)
     return Promise.reject(error)
   }
 )

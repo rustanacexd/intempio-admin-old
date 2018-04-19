@@ -10,7 +10,7 @@
                    :value="item.key">
         </el-option>
       </el-select>
-      <el-select @change='handleFilter' style="width: 140px" class="filter-item" v-model="listQuery.sort">
+      <el-select @change='handleFilter' style="width: 140px" class="filter-item" v-model="listQuery.ordering">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
       </el-select>
@@ -104,8 +104,8 @@
         listQuery: {
           search: '',
           page: 1,
-          sort: '-created',
-          status: 'new'
+          ordering: '-created',
+          status: ''
         },
         sortOptions,
         statusOptions,
