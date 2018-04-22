@@ -13,7 +13,7 @@ export const checkDate = (rule, value, callback) => {
     return callback(new Error('This field is required'))
   }
   setTimeout(() => {
-    if (new Date(Date.parse(value)).getDate() < new Date().getDate()) {
+    if (new Date(Date.parse(value)) < new Date()) {
       callback(new Error("Can't enter past dates."))
     } else {
       callback()

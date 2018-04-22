@@ -55,7 +55,7 @@
       return {
         loginForm: {
           username: 'rustan',
-          password: '0061088701a'
+          password: ''
         },
         loginRules: {
           username: [{ required: true, trigger: 'blur', validator: validateUsername }],
