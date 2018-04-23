@@ -1,5 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BASE_API: '"http://127.0.0.1:8000/api/v1"',
+  BASE_API: '"https://intempio-api-prod.herokuapp.com/api/v1"',
+  // BASE_API: '"https://intempio-api-staging.herokuapp.com/api/v1"',
 }
