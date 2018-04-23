@@ -14,6 +14,8 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
 
 Vue.use(ElementUI, { locale })
 
@@ -26,3 +28,10 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+if (process.env.production) {
+  Raven
+    .config('https://d07f7532ddfb47fbb4a316a3a6c12cef@sentry.io/1194201')
+    .addPlugin(RavenVue, Vue)
+    .install()
+}

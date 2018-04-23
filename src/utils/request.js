@@ -63,15 +63,11 @@ service.interceptors.response.use(
         type: 'error',
         duration
       })
-    } else if (response.status === 500) {
+    }
+
+    if (response.status === 500) {
       Message({
         message: error.message + '- Please reload the page or contact the developer',
-        type: 'error',
-        duration
-      })
-    } else {
-      Message({
-        message: error.message,
         type: 'error',
         duration
       })
