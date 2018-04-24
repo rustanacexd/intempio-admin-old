@@ -1,0 +1,14 @@
+# Global settings applied to the whole site.
+[build]
+publish = "dist"
+command = "npm run build"
+# PRODUCTION context: All deploys to the main
+# repository branch will inherit these settings
+[context.production.environment]
+  API_BASE_URL = "https://intempio-api-prod.herokuapp.com/api/v1"
+
+# Branch Deploy context: All deploys that are not in
+# an active Deploy Preview will inherit these settings
+[context.branch-deploy.environment]
+  API_BASE_URL = "https://intempio-api-staging.herokuapp.com/api/v1"
+
