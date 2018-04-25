@@ -429,19 +429,6 @@
       }
     },
     methods: {
-      removeContact(item) {
-        const index = this.contacts.indexOf(item)
-        this.contacts.splice(index, 1)
-      },
-      addContact() {
-        this.contacts.push({
-          name: '',
-          email: '',
-          phone: '',
-          contact_type: ''
-        })
-        console.log(this.projectObj)
-      },
       removePresenter(item) {
         const index = this.eventObj.presenters.indexOf(item)
         this.eventObj.presenters.splice(index, 1)

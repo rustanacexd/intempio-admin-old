@@ -105,7 +105,8 @@
           search: '',
           page: 1,
           ordering: '-created',
-          status: ''
+          status: '',
+          limit: 20
         },
         sortOptions,
         statusOptions,

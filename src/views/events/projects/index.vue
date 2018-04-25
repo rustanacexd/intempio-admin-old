@@ -101,7 +101,8 @@
         listQuery: {
           search: '',
           page: 1,
-          ordering: '-created'
+          ordering: '-created',
+          limit: 20
         },
         sortOptions,
         textMap: {

@@ -78,7 +78,7 @@
           </div>
           <div>
             <h5 class="form--label">Contacts</h5>
-            <div v-for="(contact, index) in contacts" :key="index" :gutter="20">
+            <div v-for="(contact, index) in projectObj.contacts" :key="contact.key" :gutter="20">
               <el-row style="padding-bottom: 10px; padding-top: 10px">
                 <el-col :lg="12">
                   <el-form-item :prop="'contacts.' + index + '.contact_type'">
@@ -164,7 +164,8 @@
     invoice_sheet: '',
     run_sheet: false,
     reporting: false,
-    notes: ''
+    notes: '',
+    contacts: []
   }
 
   export default {
@@ -190,7 +191,6 @@
         inviteType,
         contactTypes,
         projectObj: Object.assign({}, defaultProjectObj),
-        contacts: [],
         loading: false,
         rules: {
           requestor_name: [requiredValidator],
@@ -226,11 +226,12 @@
     },
     methods: {
       removeContact(item) {
-        const index = this.contacts.indexOf(item)
-        this.contacts.splice(index, 1)
+        const index = this.projectObj.contacts.indexOf(item)
+        this.projectObj.contacts.splice(index, 1)
       },
       addContact() {
-        this.contacts.push({
+        this.projectObj.contacts.push({
+          key: Date.now(),
           name: '',
           email: '',
           phone: '',
@@ -241,15 +242,15 @@
         this.loading = true
         fetchProject(this.projectCode).then(project => {
           this.projectObj = project
-          this.contacts = project.contacts || []
+          this.projectObj.contacts = project.contacts || []
           this.loading = false
+          console.log(this.projectObj)
         })
       },
       handleUpdate() {
         this.$refs.form.validate(success => {
           if (success) {
             this.loading = true
-            this.projectObj['contacts'] = this.contacts
             updateProject(this.projectCode, this.projectObj).then(() => {
               this.notifySuccess('successfully updated project')
               this.loading = false
