@@ -365,8 +365,8 @@
     slide_deck_id: '',
     status: 'new'
   }
-
   const defaultProjectObj = {
+    project_id: '',
     project_code: '',
     client: '',
     fulfilled_by: '',
@@ -380,7 +380,6 @@
   }
 
   export default {
-    name: 'biogenEventDetail',
     props: {
       isEdit: {
         type: Boolean,

@@ -241,7 +241,7 @@
         this.loading = true
         fetchProject(this.projectCode).then(project => {
           this.projectObj = project
-          this.contacts = project.contacts
+          this.contacts = project.contacts || []
           this.loading = false
         })
       },
