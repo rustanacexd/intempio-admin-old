@@ -2,7 +2,7 @@
   <div class="form-container">
     <div class="form-main-container">
       <el-form ref="form" :model="eventObj" :rules="rules" size="small" class="form-container"
-               v-loading.fullscreen.lock="loading" label-position="top">
+               v-loading.lock="loading" label-position="top">
         <el-tabs tab-position="left">
           <el-tab-pane label="Event">
             <el-card>
@@ -222,8 +222,8 @@
                     <el-form-item prop="project_code">
                       <el-select v-model="projectObj.project_code" @change="handleProjectChange"
                                  style="min-width: 400px; max-width: 100%">
-                        <el-option v-for="projectCode in projectCodes" :label="projectCode.label"
-                                   :value="projectCode.value" :key="projectCode.label"/>
+                        <el-option v-for="(projectCode, index) in projectCodes" :label="projectCode"
+                                   :value="projectCode" :key="index"/>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -313,13 +313,12 @@
 
 <script>
   import { createEvent, fetchEvent, updateEvent } from '@/api/sunovionEvent'
-  import { fetchProject } from '@/api/project'
+  import { fetchProject, fetchProjectByProjectCode } from '@/api/project'
   import {
     requiredValidator,
     emailValidator,
     checkDate,
     timeZones,
-    projectCodes,
     clients,
     internalClients,
     sowStatus,
@@ -372,6 +371,11 @@
       },
       eventId: String
     },
+    computed: {
+      projectCodes() {
+        return this.$store.getters.sunovionProjectCodes
+      }
+    },
     data() {
       return {
         timePickerOptions: {
@@ -380,7 +384,6 @@
           end: '12:00'
         },
         timeZones,
-        projectCodes,
         clients,
         internalClients,
         sowStatus,
@@ -412,8 +415,14 @@
         this.eventObj = Object.assign({}, defaultEventObj)
         this.projectObj = Object.assign({}, defaultProjectObj)
       }
+      this.getProjects()
     },
     methods: {
+      getProjects() {
+        if (this.projectCodes.length === 0) {
+          this.$store.dispatch('FetchProjectCodes', 'Sunovion')
+        }
+      },
       removePresenter(item) {
         const index = this.eventObj.presenters.indexOf(item)
         this.eventObj.presenters.splice(index, 1)
@@ -428,10 +437,11 @@
         this.loading = true
         fetchEvent(this.eventId).then(event => {
           this.eventObj = event
-          if (event.project_code) {
-            fetchProject(event.project_code).then(project => {
+          if (event.project) {
+            fetchProject(event.project).then(project => {
               this.projectObj = project
               this.contacts = project.contacts
+              this.loading = false
             })
           }
           if (this.eventObj.presenters == null) this.eventObj.presenters = []
@@ -443,7 +453,7 @@
           if (success) {
             this.loading = true
             if (this.projectObj.project_code) {
-              fetchProject(this.projectObj.project_code).then(project => {
+              fetchProjectByProjectCode(this.projectObj.project_code).then(project => {
                 this.eventObj.project = project.id
                 return project
               }).then(project => {
@@ -469,7 +479,7 @@
       },
       handleProjectChange(value) {
         this.loading = true
-        fetchProject(value).then(project => {
+        fetchProjectByProjectCode(value).then(project => {
           this.projectObj = project
           this.contacts = project.contacts
           this.loading = false

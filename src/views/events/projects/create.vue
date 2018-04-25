@@ -1,5 +1,5 @@
 <template>
-  <project-form :is-edit='false' :project-code="this.$route.params.projectCode"></project-form>
+  <project-form :is-edit='false' :id="this.$route.params.id"></project-form>
 </template>
 
 <script>

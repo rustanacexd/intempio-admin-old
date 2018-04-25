@@ -176,7 +176,10 @@
         this.$router.push({ name: 'biogenCreateEvent' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'biogenEditEvent', params: { eventId: row.id } })
+        this.$router.push({
+          name: 'biogenEditEvent',
+          params: { eventId: row.id }
+        })
       }
     }
   }

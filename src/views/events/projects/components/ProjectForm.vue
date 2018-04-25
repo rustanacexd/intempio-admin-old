@@ -2,9 +2,20 @@
   <div class="form-container">
     <div class="form-main-container">
       <el-form ref="form" :model="projectObj" :rules="rules" size="small" class="form-container"
-               v-loading.fullscreen.lock="loading" label-position="top">
+               v-loading.lock="loading" label-position="top">
         <el-card style="padding: 20px">
-          <h4 class="form--label">{{projectLabel}}</h4>
+          <el-row :gutter="20">
+            <el-col :lg="4">
+              <el-form-item prop="project_id" label="Project ID">
+                <el-input v-model="projectObj.project_id"/>
+              </el-form-item>
+            </el-col>
+            <el-col :lg="10">
+              <el-form-item prop="project_code" label="Project Code">
+                <el-input v-model="projectObj.project_code"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <div>
             <el-row :gutter="20">
               <el-col :lg="4">
@@ -143,10 +154,7 @@
   import { fetchProject, updateProject, createProject } from '@/api/project'
   import {
     requiredValidator,
-    emailValidator,
-    checkDate,
     timeZones,
-    projectCodes,
     clients,
     internalClients,
     sowStatus,
@@ -155,6 +163,8 @@
   } from '@/utils/constants'
 
   const defaultProjectObj = {
+    id: '',
+    project_id: '',
     project_code: '',
     client: '',
     fulfilled_by: '',
@@ -174,7 +184,7 @@
         type: Boolean,
         default: false
       },
-      projectCode: String
+      id: String
     },
     data() {
       return {
@@ -184,7 +194,6 @@
           end: '12:00'
         },
         timeZones,
-        projectCodes,
         clients,
         internalClients,
         sowStatus,
@@ -193,17 +202,9 @@
         projectObj: Object.assign({}, defaultProjectObj),
         loading: false,
         rules: {
-          requestor_name: [requiredValidator],
-          phone: [requiredValidator],
-          email: [requiredValidator, emailValidator],
-          name: [requiredValidator],
-          date: [{ validator: checkDate, trigger: 'blur' }],
-          time: [requiredValidator],
-          period: [requiredValidator],
-          duration: [requiredValidator],
-          ms_sma: [requiredValidator],
-          eod_webcast: [requiredValidator],
-          slide_deck_id: [requiredValidator]
+          project_id: [requiredValidator],
+          project_code: [requiredValidator],
+          client: [requiredValidator]
         }
       }
     },
@@ -212,16 +213,6 @@
         this.getProject()
       } else {
         this.projectObj = Object.assign({}, defaultProjectObj)
-      }
-    },
-    computed: {
-      projectLabel() {
-        if (this.projectObj.project_code) {
-          const projectCodeObj = this.projectCodes.find(obj => {
-            if (obj.value === this.projectObj.project_code) return true
-          })
-          return projectCodeObj.label
-        }
       }
     },
     methods: {
@@ -240,18 +231,17 @@
       },
       getProject() {
         this.loading = true
-        fetchProject(this.projectCode).then(project => {
+        fetchProject(this.id).then(project => {
           this.projectObj = project
           this.projectObj.contacts = project.contacts || []
           this.loading = false
-          console.log(this.projectObj)
         })
       },
       handleUpdate() {
         this.$refs.form.validate(success => {
           if (success) {
             this.loading = true
-            updateProject(this.projectCode, this.projectObj).then(() => {
+            updateProject(this.id, this.projectObj).then(() => {
               this.notifySuccess('successfully updated project')
               this.loading = false
             })
@@ -265,10 +255,11 @@
           if (success) {
             this.loading = true
             createProject(this.projectObj)
-              .then(() => {
+              .then(data => {
                 this.loading = false
                 this.resetForm()
                 this.notifySuccess('Successfully created project')
+                this.$store.commit('FetchProjectCodes', data.client)
               })
           } else {
             this.notifyError()

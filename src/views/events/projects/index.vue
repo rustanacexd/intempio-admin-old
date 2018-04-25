@@ -12,26 +12,33 @@
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">Search
       </el-button>
-      <!--<el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"-->
-                 <!--icon="el-icon-edit">Add-->
-      <!--</el-button>-->
+      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
+                 icon="el-icon-edit">Add
+      </el-button>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="loading" border fit
               highlight-current-row
               style="width: 100%">
-      <el-table-column align="center" label="Project ID" width="300">
+      <el-table-column align="center" label="Lookup ID" width="300">
         <template slot-scope="scope">
           <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.id}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Project Code">
+      <el-table-column label="Project Code" width="300">
         <template slot-scope="scope">
           <span class="link-type" style="cursor: pointer"
                 @click="handleUpdate(scope.row)">{{scope.row.project_code}}</span>
         </template>
       </el-table-column>
+
+      <!--<el-table-column label="Project ID">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span class="link-type" style="cursor: pointer"-->
+                <!--@click="handleUpdate(scope.row)">{{scope.row.project_id}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
 
       <el-table-column label="Client" width="100">
         <template slot-scope="scope">
@@ -58,10 +65,10 @@
       </el-table-column>
 
 
-      <el-table-column label="actions" width="280" class-name="small-padding fixed-width">
+      <el-table-column label="actions" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">edit</el-button>
-          <!--<el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>-->
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,7 +85,7 @@
 </template>
 
 <script>
-  import { fetchList, deleteProject } from '@/api/project'
+  import { fetchProjects, deleteProject } from '@/api/project'
   import waves from '@/directive/waves'
 
   const sortOptions = [
@@ -117,7 +124,7 @@
     methods: {
       getList() {
         this.listLoading = true
-        fetchList(this.listQuery).then(response => {
+        fetchProjects(this.listQuery).then(response => {
           this.list = response.results
           this.total = response.count
           this.listLoading = false
@@ -143,7 +150,7 @@
             this.getList()
             this.$notify({
               title: 'Success',
-              message: `deleted ${row.name}`,
+              message: `deleted ${row.project_code}`,
               type: 'success',
               duration: 3000
             })
@@ -161,7 +168,7 @@
         this.$router.push({ name: 'createProject' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'editProject', params: { projectCode: row.project_code }})
+        this.$router.push({ name: 'editProject', params: { id: row.id }})
       }
     }
   }

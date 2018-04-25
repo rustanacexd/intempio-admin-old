@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
+import router from '../router'
 
 // Create axios instance
 const service = axios.create({
@@ -71,6 +72,10 @@ service.interceptors.response.use(
         type: 'error',
         duration
       })
+    }
+
+    if (response.status === 404) {
+      router.push('/404')
     }
 
     console.log('err' + error)// for debug

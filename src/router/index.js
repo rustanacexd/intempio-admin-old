@@ -151,7 +151,7 @@ export const constantRouterMap = [
         meta: { title: 'Create', icon: 'form' }
       },
       {
-        path: 'edit-project/:projectCode',
+        path: 'edit-project/:id',
         component: () => import('@/views/events/projects/edit'),
         name: 'editProject',
         meta: { title: 'Edit', icon: 'form' }
