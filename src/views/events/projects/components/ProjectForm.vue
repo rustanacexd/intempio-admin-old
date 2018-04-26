@@ -241,7 +241,9 @@
         this.$refs.form.validate(success => {
           if (success) {
             this.loading = true
-            updateProject(this.id, this.projectObj).then(() => {
+            updateProject(this.id, this.projectObj).then(data => {
+              return this.$store.commit('FetchProjectCodes', data.client)
+            }).then(() => {
               this.notifySuccess('successfully updated project')
               this.loading = false
             })
@@ -256,10 +258,12 @@
             this.loading = true
             createProject(this.projectObj)
               .then(data => {
+                return this.$store.commit('FetchProjectCodes', data.client)
+              })
+              .then(() => {
+                this.notifySuccess('successfully updated project')
                 this.loading = false
                 this.resetForm()
-                this.notifySuccess('Successfully created project')
-                this.$store.commit('FetchProjectCodes', data.client)
               })
           } else {
             this.notifyError()
