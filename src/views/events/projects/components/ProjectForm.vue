@@ -242,10 +242,10 @@
           if (success) {
             this.loading = true
             updateProject(this.id, this.projectObj).then(data => {
-              return this.$store.commit('FetchProjectCodes', data.client)
-            }).then(() => {
-              this.notifySuccess('successfully updated project')
-              this.loading = false
+              this.$store.dispatch('FetchProjectCodes', data.client).then(() => {
+                this.notifySuccess('successfully updated project')
+                this.loading = false
+              })
             })
           } else {
             this.notifyError()
@@ -256,15 +256,13 @@
         this.$refs.form.validate(success => {
           if (success) {
             this.loading = true
-            createProject(this.projectObj)
-              .then(data => {
-                return this.$store.commit('FetchProjectCodes', data.client)
-              })
-              .then(() => {
+            createProject(this.projectObj).then(data => {
+              this.$store.dispatch('FetchProjectCodes', data.client).then(() => {
                 this.notifySuccess('successfully updated project')
                 this.loading = false
                 this.resetForm()
               })
+            })
           } else {
             this.notifyError()
           }

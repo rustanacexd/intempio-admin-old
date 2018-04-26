@@ -17,7 +17,7 @@ const project = {
 
   actions: {
     FetchProjectCodes({ commit }, clientName) {
-      fetchProjectCodes({ client: clientName }).then(projectCodes => {
+      return fetchProjectCodes({ client: clientName }).then(projectCodes => {
         switch (clientName) {
           case 'Biogen':
             commit('SET_BIOGEN_PROJECT_CODES', projectCodes)
