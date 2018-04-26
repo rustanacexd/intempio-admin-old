@@ -34,10 +34,10 @@
       </el-table-column>
 
       <!--<el-table-column label="Project ID">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span class="link-type" style="cursor: pointer"-->
-                <!--@click="handleUpdate(scope.row)">{{scope.row.project_id}}</span>-->
-        <!--</template>-->
+      <!--<template slot-scope="scope">-->
+      <!--<span class="link-type" style="cursor: pointer"-->
+      <!--@click="handleUpdate(scope.row)">{{scope.row.project_id}}</span>-->
+      <!--</template>-->
       <!--</el-table-column>-->
 
       <el-table-column label="Client" width="100">
@@ -48,19 +48,22 @@
 
       <el-table-column label="Fulfilled by" width="120">
         <template slot-scope="scope">
-          <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.fulfilled_by}}</span>
+          <span class="link-type" style="cursor: pointer"
+                @click="handleUpdate(scope.row)">{{scope.row.fulfilled_by}}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="Invite sent by" width="120">
         <template slot-scope="scope">
-          <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.invite_sent_by}}</span>
+          <span class="link-type" style="cursor: pointer"
+                @click="handleUpdate(scope.row)">{{scope.row.invite_sent_by}}</span>
         </template>
       </el-table-column>
 
       <el-table-column label="SOW status" width="100">
         <template slot-scope="scope">
-          <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.sow_status}}</span>
+          <span class="link-type" style="cursor: pointer"
+                @click="handleUpdate(scope.row)">{{scope.row.sow_status}}</span>
         </template>
       </el-table-column>
 
@@ -146,13 +149,15 @@
         }).then(() => {
           this.listLoading = true
           deleteProject(row.id).then(() => {
-            this.listLoading = false
             this.getList()
-            this.$notify({
-              title: 'Success',
-              message: `deleted ${row.project_code}`,
-              type: 'success',
-              duration: 3000
+            this.$store.dispatch('FetchProjectCodes', row.client).then(() => {
+              this.listLoading = false
+              this.$notify({
+                title: 'Success',
+                message: `deleted ${row.project_code}`,
+                type: 'success',
+                duration: 3000
+              })
             })
           })
         }).catch(() => {
@@ -168,7 +173,7 @@
         this.$router.push({ name: 'createProject' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'editProject', params: { id: row.id }})
+        this.$router.push({ name: 'editProject', params: { id: row.id } })
       }
     }
   }
