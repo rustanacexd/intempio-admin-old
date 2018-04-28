@@ -47,13 +47,14 @@
           <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="actions" width="280" class-name="small-padding fixed-width">
+      <el-table-column label="actions" width="340" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">edit</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
           <el-button v-if="scope.row.status === 'reviewed'" size="mini" type="success"
                      @click="alert('not implemented yet')">submit to kf
           </el-button>
+          <el-button size="mini" type="warning" @click="handleClone(scope.row)">clone</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,7 +71,7 @@
 </template>
 
 <script>
-  import { fetchList, deleteEvent } from '@/api/sunovionEvent'
+  import { fetchList, deleteEvent, createEvent } from '@/api/sunovionEvent'
 
   import waves from '@/directive/waves'
 
@@ -176,7 +177,19 @@
         this.$router.push({ name: 'sunovionCreateEvent' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'sunovionEditEvent', params: { eventId: row.id }})
+        this.$router.push({ name: 'sunovionEditEvent', params: { eventId: row.id } })
+      },
+      handleClone(row) {
+        row.name = row.name + ' Copy'
+        row.status = 'new'
+        this.loading = true
+        createEvent(row).then(data => {
+          this.loading = false
+          this.$router.push({
+            name: 'sunovionEditEvent',
+            params: { eventId: data.id }
+          })
+        })
       }
     }
   }
