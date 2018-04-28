@@ -12,9 +12,14 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      if (store.getters.role.length === 0) {
-        store.dispatch('GetInfo').then(res => { // pull user information
-          next()
+      if (store.getters.roles.length === 0) {
+        store.dispatch('GetInfo').then(res => {
+          const roles = res.roles
+          store.dispatch('GenerateRoutes', { roles }).then(() => {
+            router.addRoutes(store.getters.addRouters)
+            next(to.redirectedFrom)
+            // next({ ...to, replace: true })
+          })
         }).catch(() => {
           store.dispatch('FedLogOut').then(() => {
             Message.error('Verification failed, please log in again')

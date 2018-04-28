@@ -213,7 +213,7 @@
               </div>
             </el-card>
           </el-tab-pane>
-          <el-tab-pane label="Internal" name="internal">
+          <el-tab-pane label="Internal" name="internal" v-if="!isClient">
             <el-card>
               <h4 class="form--label">Project Info</h4>
               <div>
@@ -299,7 +299,7 @@
         </el-tabs>
         <el-form-item class="page-component-up">
           <el-button type="warning" @click="dialogVisible = true" icon="el-icon-edit-outline" size="large"
-                     v-if="isEdit">
+                     v-if="isEdit && isClient">
             Request Change
           </el-button>
           <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large" v-if="isEdit">
@@ -387,9 +387,8 @@
       eventId: String
     },
     computed: {
-      projectCodes() {
-        return this.$store.getters.sunovionProjectCodes
-      }
+      projectCodes() { return this.$store.getters.sunovionProjectCodes },
+      isClient() { return this.$store.getters.isClient }
     },
     data() {
       return {

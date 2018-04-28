@@ -6,6 +6,7 @@ const user = {
     token: getToken(),
     fullname: '',
     role: '',
+    roles: [],
     username: ''
   },
 
@@ -21,6 +22,9 @@ const user = {
     },
     SET_ROLE: (state, role) => {
       state.role = role
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
     }
   },
 
@@ -46,7 +50,7 @@ const user = {
         const username = getUsername()
         getInfo(username).then(response => {
           const data = response
-          commit('SET_ROLE', data.role)
+          commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.fullname)
           commit('SET_USERNAME', data.username)
           resolve(response)
@@ -58,17 +62,9 @@ const user = {
 
     LogOut({ commit }) {
       return new Promise(resolve => {
-        // logout(state.token).then(() => {
-        //   commit('SET_TOKEN', '')
-        //   commit('SET_ROLES', [])
-        //   removeToken()
-        //   resolve()
-        // }).catch(error => {
-        //   reject(error)
-        // })
-
         commit('SET_TOKEN', '')
         commit('SET_ROLE', '')
+        commit('SET_ROLES', [])
         removeToken()
         removeUsername()
         resolve()
@@ -79,6 +75,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         commit('SET_ROLE', '')
+        commit('SET_ROLES', [])
         removeUsername()
         removeToken()
         resolve()

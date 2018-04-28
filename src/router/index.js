@@ -22,10 +22,6 @@ import Layout from '../views/layout/Layout'
   }
  **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-  { path: '/401', component: () => import('@/views/401'), hidden: true },
-
   {
     path: '/',
     component: Layout,
@@ -44,6 +40,13 @@ export const constantRouterMap = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/401', component: () => import('@/views/401'), hidden: true },
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncRouterMap = [
   {
     path: '/biogen-events',
     component: Layout,
@@ -51,7 +54,8 @@ export const constantRouterMap = [
     name: 'biogenEvents',
     meta: {
       title: 'Biogen',
-      icon: 'table'
+      icon: 'table',
+      role: ['staff']
     },
     children: [
       {
@@ -67,18 +71,27 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/biogen-events/',
     hidden: true,
+    // meta: { role: ['biogen'] },
     children: [
       {
         path: 'create-event',
         component: () => import('@/views/events/biogen/create'),
         name: 'biogenCreateEvent',
-        meta: { title: 'Create', icon: 'form' }
+        meta: {
+          title: 'Create',
+          icon: 'form',
+          role: ['biogen']
+        }
       },
       {
         path: 'edit-event/:eventId',
         component: () => import('@/views/events/biogen/edit'),
         name: 'biogenEditEvent',
-        meta: { title: 'Edit', icon: 'form' }
+        meta: {
+          title: 'Edit',
+          icon: 'form',
+          role: ['biogen']
+        }
       }
     ]
   },
@@ -89,7 +102,8 @@ export const constantRouterMap = [
     name: 'sunovionEvents',
     meta: {
       title: 'Sunovion',
-      icon: 'table'
+      icon: 'table',
+      role: ['staff']
     },
     children: [
       {
@@ -105,6 +119,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/sunovion-events/',
     hidden: true,
+    meta: { role: ['sunovion'] },
     children: [
       {
         path: 'create-event',
@@ -127,14 +142,17 @@ export const constantRouterMap = [
     name: 'projects',
     meta: {
       title: 'Projects',
-      icon: 'table'
+      icon: 'table',
+      role: ['staff']
     },
     children: [
       {
         path: '',
         component: () => import('@/views/events/projects/index'),
         name: 'projectEventIndex',
-        meta: { title: 'Projects', icon: 'table2' }
+        meta: {
+          title: 'Projects', icon: 'table2'
+        }
       }
     ]
   },
@@ -143,6 +161,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/projects',
     hidden: true,
+    meta: { role: ['staff'] },
     children: [
       {
         path: 'create-project',
@@ -162,7 +181,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
+  // mode: 'history', // Backend support can be opened
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
