@@ -177,7 +177,10 @@
         this.$router.push({ name: 'sunovionCreateEvent' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'sunovionEditEvent', params: { eventId: row.id } })
+        this.$router.push({
+          name: 'sunovionEditEvent',
+          params: { eventId: row.id }
+        })
       },
       handleClone(row) {
         row.name = row.name + ' Copy'

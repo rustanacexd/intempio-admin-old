@@ -173,7 +173,10 @@
         this.$router.push({ name: 'createProject' })
       },
       handleUpdate(row) {
-        this.$router.push({ name: 'editProject', params: { id: row.id } })
+        this.$router.push({
+          name: 'editProject',
+          params: { id: row.id }
+        })
       }
     }
   }

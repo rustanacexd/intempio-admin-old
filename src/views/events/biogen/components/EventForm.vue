@@ -314,6 +314,10 @@
           </el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">
+          <el-button type="warning" @click="dialogVisible = true" icon="el-icon-edit-outline" size="large"
+                     v-if="isEdit">
+            Request Change
+          </el-button>
           <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large" v-if="isEdit">
             Update Event
           </el-button>
@@ -324,12 +328,24 @@
       </el-form>
     </div>
 
+    <el-dialog
+      title="Request Change"
+      :visible="dialogVisible"
+      width="50%">
+      <el-input type="textarea" :rows="4" placeholder=""
+                v-model="change_notes"/>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="handleRequestChange">Submit</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import { createEvent, fetchEvent, updateEvent } from '@/api/biogenEvent'
   import { fetchProject, fetchProjectByProjectCode } from '@/api/project'
+  import { requestBiogenChange } from '@/api/common'
   import {
     requiredValidator,
     emailValidator,
@@ -409,6 +425,8 @@
         projectObj: Object.assign({}, defaultProjectObj),
         contacts: [],
         loading: false,
+        dialogVisible: false,
+        change_notes: '',
         rules: {
           requestor_name: [requiredValidator],
           phone: [requiredValidator],
@@ -533,6 +551,18 @@
           message: notificationText,
           type: 'success',
           duration: 3000
+        })
+      },
+      handleRequestChange() {
+        this.dialogVisible = false
+        this.loading = true
+        requestBiogenChange({
+          message: this.change_notes,
+          eventID: this.eventId,
+          eventName: this.eventObj.name,
+          client: 'biogen'
+        }).then(response => {
+          this.loading = false
         })
       }
     }
