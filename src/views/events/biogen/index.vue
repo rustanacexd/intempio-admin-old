@@ -16,7 +16,7 @@
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
+      <el-button v-if="!isClient" class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
                  icon="el-icon-edit">Add
       </el-button>
     </div>
@@ -24,7 +24,7 @@
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="loading" border fit
               highlight-current-row
               style="width: 100%">
-      <el-table-column align="center" label="Event ID" width="300">
+      <el-table-column align="center" label="Event ID" width="300" v-if="!isClient">
         <template slot-scope="scope">
           <span class="link-type" style="cursor: pointer" @click="handleUpdate(scope.row)">{{scope.row.id}}</span>
         </template>
@@ -49,12 +49,16 @@
       </el-table-column>
       <el-table-column label="actions" width="350" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">edit</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
-          <el-button v-if="scope.row.status === 'reviewed'" size="mini" type="success"
-                     @click="alert('not implemented yet')">submit to kf
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">
+            {{isClient ? 'View' : 'Edit'}}
           </el-button>
-          <el-button size="mini" type="warning" @click="handleClone(scope.row)">clone</el-button>
+          <template v-if="!isClient">
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
+            <el-button v-if="scope.row.status === 'reviewed'" size="mini" type="success"
+                       @click="alert('not implemented yet')">submit to kf
+            </el-button>
+            <el-button size="mini" type="warning" @click="handleClone(scope.row)">clone</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -78,7 +82,8 @@
   const statusOptions = [
     { key: 'new', display_name: 'new' },
     { key: 'reviewed', display_name: 'reviewed' },
-    { key: 'accepted', display_name: 'accepted' }
+    { key: 'accepted', display_name: 'accepted' },
+    { key: 'canceled', display_name: 'canceled' }
   ]
 
   const sortOptions = [
@@ -95,6 +100,9 @@
   export default {
     directives: {
       waves
+    },
+    computed: {
+      isClient() { return this.$store.getters.isClient }
     },
     data() {
       return {
@@ -122,7 +130,8 @@
         const statusMap = {
           accepted: 'success',
           new: 'warning',
-          reviewed: 'primary'
+          reviewed: 'primary',
+          canceled: 'danger'
         }
         return statusMap[status]
       }

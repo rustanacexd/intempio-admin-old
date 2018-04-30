@@ -194,16 +194,22 @@
         this.dialogVisible = true
       },
       handleRevert() {
-        revertEvent(this.$route.params.eventId, { history_id: this.eventObj.history_id })
-          .then(() => {
-            this.$notify({
-              title: 'Success',
-              message: 'Successfully reverted event data',
-              type: 'success',
-              duration: 3000
+        this.$confirm('This will permanently revert the event data. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          revertEvent(this.$route.params.eventId, { history_id: this.eventObj.history_id })
+            .then(() => {
+              this.$notify({
+                title: 'Success',
+                message: 'Successfully reverted event data',
+                type: 'success',
+                duration: 3000
+              })
+              this.$router.go(-1)
             })
-            this.$router.go(-1)
-          })
+        })
       }
     }
   }

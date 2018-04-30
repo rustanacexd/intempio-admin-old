@@ -37,7 +37,7 @@ export const constantRouterMap = [
     children: [{
       path: '',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard', clientTitle: 'Dashboard' }
     }]
   },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
@@ -56,14 +56,14 @@ export const asyncRouterMap = [
     meta: {
       title: 'Biogen',
       icon: 'table',
-      role: ['staff']
+      role: ['biogen']
     },
     children: [
       {
         path: '',
         component: () => import('@/views/events/biogen/index'),
         name: 'biogenEventIndex',
-        meta: { title: 'Biogen', icon: 'table' }
+        meta: { title: 'Biogen', icon: 'table', clientTitle: 'Events' }
       }
     ]
   },
@@ -72,7 +72,6 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/biogen-events/',
     hidden: true,
-    // meta: { role: ['biogen'] },
     children: [
       {
         path: 'create-event',
@@ -81,7 +80,7 @@ export const asyncRouterMap = [
         meta: {
           title: 'Create',
           icon: 'form',
-          role: ['biogen']
+          role: ['staff']
         }
       },
       {
@@ -110,14 +109,14 @@ export const asyncRouterMap = [
     meta: {
       title: 'Sunovion',
       icon: 'table',
-      role: ['staff']
+      role: ['sunovion']
     },
     children: [
       {
         path: '',
         component: () => import('@/views/events/sunovion/index'),
         name: 'sunovionEventIndex',
-        meta: { title: 'Sunovion', icon: 'table' }
+        meta: { title: 'Sunovion', icon: 'table', clientTitle: 'Events' }
       }
     ]
   },
@@ -126,25 +125,36 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/sunovion-events/',
     hidden: true,
-    meta: { role: ['sunovion'] },
     children: [
       {
         path: 'create-event',
         component: () => import('@/views/events/sunovion/create'),
         name: 'sunovionCreateEvent',
-        meta: { title: 'Create', icon: 'form' }
+        meta: {
+          title: 'Create',
+          icon: 'form',
+          role: ['staff']
+        }
       },
       {
         path: 'edit-event/:eventId',
         component: () => import('@/views/events/sunovion/edit'),
         name: 'sunovionEditEvent',
-        meta: { title: 'Edit', icon: 'form' }
+        meta: {
+          title: 'Edit',
+          icon: 'form',
+          role: ['sunovion']
+        }
       },
       {
         path: 'history/:eventId',
         component: () => import('@/views/events/sunovion/history'),
         name: 'sunovionEventHistory',
-        meta: { title: 'History', icon: 'form' }
+        meta: {
+          title: 'History',
+          icon: 'form',
+          role: ['sunovion']
+        }
       }
     ]
   },

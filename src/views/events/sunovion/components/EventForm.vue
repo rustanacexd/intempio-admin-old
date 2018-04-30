@@ -15,17 +15,20 @@
                 <el-row :gutter="20">
                   <el-col :lg="8">
                     <el-form-item prop="requestor_name">
-                      <el-input v-model="eventObj.requestor_name" placeholder="Requestor Name (required)"/>
+                      <el-input v-model="eventObj.requestor_name" placeholder="Requestor Name (required)"
+                                :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                   <el-col :lg="8">
                     <el-form-item prop="phone">
-                      <el-input v-model="eventObj.phone" placeholder="Requestor Phone (required)"/>
+                      <el-input v-model="eventObj.phone" placeholder="Requestor Phone (required)"
+                                :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                   <el-col :lg="8">
                     <el-form-item prop="email">
-                      <el-input v-model="eventObj.email" placeholder="Requestor Email (required)"/>
+                      <el-input v-model="eventObj.email" placeholder="Requestor Email (required)"
+                                :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -39,7 +42,7 @@
                 <el-row :gutter="20">
                   <el-col :lg="10">
                     <el-form-item prop="name">
-                      <el-input v-model="eventObj.name" placeholder="Event Name (required)"/>
+                      <el-input v-model="eventObj.name" placeholder="Event Name (required)" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
 
@@ -47,14 +50,14 @@
                     <el-form-item prop="date">
                       <el-date-picker type="date" placeholder="Event Date (required)" v-model="eventObj.date"
                                       style="width: 100%;"
-                                      value-format="yyyy-MM-dd"/>
+                                      value-format="yyyy-MM-dd" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
 
                   <el-col :lg="6">
                     <el-form-item prop="time">
                       <el-time-select v-model="eventObj.time" placeholder="Event Time (required)"
-                                      :picker-options="timePickerOptions"/>
+                                      :picker-options="timePickerOptions" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
 
@@ -86,6 +89,15 @@
                       </el-radio-group>
                     </el-form-item>
                   </el-col>
+
+                  <el-col :lg="6">
+                    <el-row>
+                      <el-col :lg="12">
+                        <h5 class="form--label">Date to EST (computed)</h5>
+                      </el-col>
+                    </el-row>
+                    {{ eventObj.date_est }}
+                  </el-col>
                 </el-row>
 
                 <el-row>
@@ -97,17 +109,20 @@
                 <el-row>
                   <el-col :lg="6">
                     <el-form-item prop="producer_required">
-                      <el-checkbox v-model="eventObj.producer_required" label="Is a producer required on site?"/>
+                      <el-checkbox v-model="eventObj.producer_required" label="Is a producer required on site?"
+                                   :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                   <el-col :lg="5">
                     <el-form-item prop="rehearsal_required">
-                      <el-checkbox v-model="eventObj.rehearsal_required" label="Would you like a rehearsal?"/>
+                      <el-checkbox v-model="eventObj.rehearsal_required" label="Would you like a rehearsal?"
+                                   :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                   <el-col :lg="7">
                     <el-form-item prop="technology_check">
-                      <el-checkbox v-model="eventObj.technology_check" label="Would you like a technology check?"/>
+                      <el-checkbox v-model="eventObj.technology_check" label="Would you like a technology check?"
+                                   :disabled="isDisabled"/>
                       <el-tooltip style="margin-left: 5px" class="item" effect="dark" placement="top"
                                   content="We recommend 30 minutes tech check to ensure higher quality events.">
                         <i class="el-icon-question"></i>
@@ -117,7 +132,8 @@
 
                   <el-col :lg="6">
                     <el-form-item prop="recording_required">
-                      <el-checkbox v-model="eventObj.recording_required" label="Recording Required?"/>
+                      <el-checkbox v-model="eventObj.recording_required" label="Recording Required?"
+                                   :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -125,7 +141,8 @@
                 <el-row :gutter="20">
                   <el-col :lg="7">
                     <el-form-item label="No. of participants" prop="participants_count">
-                      <el-input-number v-model="eventObj.participants_count" controls-position="right" :min="1"/>
+                      <el-input-number v-model="eventObj.participants_count" controls-position="right" :min="1"
+                                       :disabled="isDisabled"/>
                       <el-tooltip style="margin-left: 5px" class="item" effect="dark"
                                   content="Expected number of participants planned for this event?" placement="top">
                         <i class="el-icon-question"></i>
@@ -135,7 +152,8 @@
                   </el-col>
                   <el-col :lg="7">
                     <el-form-item label="No. of presenters" prop="presenters_count">
-                      <el-input-number v-model="eventObj.presenters_count" controls-position="right" :min="1"/>
+                      <el-input-number v-model="eventObj.presenters_count" controls-position="right" :min="1"
+                                       :disabled="isDisabled"/>
                       <el-tooltip style="margin-left: 5px" class="item" effect="dark"
                                   content="Number of presenters planned for the event" placement="top">
                         <i class="el-icon-question"></i>
@@ -154,25 +172,26 @@
                 <el-row v-for="(presenter, index) in eventObj.presenters" :key="index" :gutter="20">
                   <el-col :lg="10">
                     <el-form-item :prop="'presenters.' + index + '.name'">
-                      <el-input v-model="presenter.name" placeholder="Presenter Name"/>
+                      <el-input v-model="presenter.name" placeholder="Presenter Name" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                   <el-col :lg="10">
                     <el-form-item
                       :rules="[{ type: 'email', message: 'Please input correct email address', trigger: 'change' }]"
                       :prop="'presenters.' + index + '.email'">
-                      <el-input v-model="presenter.email" placeholder="Presenter Email"/>
+                      <el-input v-model="presenter.email" placeholder="Presenter Email" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
 
                   <el-col :span="2">
                     <el-button circle @click.prevent="removePresenter(presenter)" icon="el-icon-delete" size="small"
-                               style="margin-bottom: 10px"/>
+                               style="margin-bottom: 10px" :disabled="isDisabled"/>
                   </el-col>
                 </el-row>
 
                 <p>
-                  <el-button type="primary" icon="el-icon-plus" @click="addPresenter" size="small">
+                  <el-button type="primary" icon="el-icon-plus" @click="addPresenter" size="small"
+                             :disabled="isDisabled">
                     add presenter
                   </el-button>
                 </p>
@@ -187,7 +206,7 @@
                   <el-col :lg="16">
                     <el-form-item prop="notes">
                       <el-input type="textarea" :rows="4" placeholder="add information not found on the fields above"
-                                v-model="eventObj.notes"/>
+                                v-model="eventObj.notes" :disabled="isDisabled"/>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -205,6 +224,7 @@
                         <el-option label="new" value="new"/>
                         <el-option label="reviewed" value="reviewed"/>
                         <el-option label="accepted" value="accepted"/>
+                        <el-option label="canceled" value="canceled"/>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -306,10 +326,11 @@
                      v-if="isEdit && isClient">
             Request Change
           </el-button>
-          <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large" v-if="isEdit">
+          <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large"
+                     v-if="isEdit && !isClient">
             Update Event
           </el-button>
-          <el-button type="primary " @click="handleCreate" icon="el-icon-upload2" size="large" v-else>
+          <el-button type="primary " @click="handleCreate" icon="el-icon-upload2" size="large" v-if="!isEdit">
             Create Event
           </el-button>
         </el-form-item>
@@ -318,6 +339,7 @@
     <el-dialog
       title="Request Change"
       :visible="dialogVisible"
+      :show-close="false"
       width="50%">
       <el-input type="textarea" :rows="4" placeholder=""
                 v-model="change_notes"/>
@@ -351,6 +373,7 @@
     email: '',
     requestor_name: '',
     date: '',
+    date_est: '',
     time: '',
     period: '',
     timezone: 'US/Eastern',
@@ -367,7 +390,6 @@
     technology_check: false,
     status: 'new'
   }
-
   const defaultProjectObj = {
     project_code: '',
     client: '',
@@ -392,7 +414,8 @@
     },
     computed: {
       projectCodes() { return this.$store.getters.sunovionProjectCodes },
-      isClient() { return this.$store.getters.isClient }
+      isClient() { return this.$store.getters.isClient },
+      isDisabled() { return this.isClient }
     },
     data() {
       return {
@@ -482,16 +505,18 @@
                 return project
               }).then(project => {
                 updateEvent(this.eventId, this.eventObj)
-                  .then(() => {
+                  .then(data => {
                     this.projectObj = project
                     this.projectObj.contacts = project.contacts
+                    this.eventObj = data
                     this.loading = false
                     this.notifySuccess('Successfully updated event')
                   })
               })
             } else {
               updateEvent(this.eventId, this.eventObj)
-                .then(() => {
+                .then(data => {
+                  this.eventObj = data
                   this.loading = false
                   this.notifySuccess('Successfully updated event')
                 })

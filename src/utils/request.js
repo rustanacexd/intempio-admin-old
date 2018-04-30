@@ -74,6 +74,15 @@ service.interceptors.response.use(
       router.push('/404')
     }
 
+    if (response.status === 400 && location.hash === '#/login') {
+      console.log(router)
+      Message({
+        message: response.data.non_field_errors[0],
+        type: 'error',
+        duration
+      })
+    }
+
     console.log('err' + error)// for debug
     console.log(error.message)
     console.log(response.data)
