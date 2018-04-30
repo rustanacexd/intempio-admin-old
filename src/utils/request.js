@@ -67,11 +67,7 @@ service.interceptors.response.use(
     }
 
     if (response.status === 500) {
-      Message({
-        message: error.message + '- Please reload the page or contact the developer',
-        type: 'error',
-        duration
-      })
+      router.push('/500')
     }
 
     if (response.status === 404) {

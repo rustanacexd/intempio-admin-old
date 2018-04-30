@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div class="app-container">
     <div class="filter-container" style="margin-bottom: 25px">
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="Search"
                 v-model="listQuery.search">
@@ -10,7 +10,7 @@
                    :value="item.key">
         </el-option>
       </el-select>
-      <el-select @change='handleFilter' style="width: 140px" class="filter-item" v-model="listQuery.ordering">
+      <el-select @change='handleFilter' class="filter-item" v-model="listQuery.ordering">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
       </el-select>
@@ -42,12 +42,12 @@
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="status" width="100">
+      <el-table-column class-name="status-col" label="status" width="100" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="actions" width="340" class-name="small-padding fixed-width">
+      <el-table-column label="actions" width="350" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">edit</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
@@ -107,7 +107,7 @@
           page: 1,
           ordering: '-created',
           status: '',
-          limit: 20
+          limit: 10
         },
         sortOptions,
         statusOptions,

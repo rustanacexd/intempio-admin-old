@@ -3,8 +3,8 @@
     <div class="form-main-container">
       <el-form ref="form" :model="eventObj" :rules="rules" size="small" class="form-container"
                v-loading.lock="loading" label-position="top">
-        <el-tabs tab-position="left">
-          <el-tab-pane label="Event">
+        <el-tabs tab-position="left" @tab-click="getProject" v-model="activeTab">
+          <el-tab-pane label="Event" name="event">
             <el-card>
               <div>
                 <el-row>
@@ -229,11 +229,11 @@
               </div>
             </el-card>
           </el-tab-pane>
-          <el-tab-pane  v-if="!isClient" label="Internal" name="internal">
+          <el-tab-pane v-if="!isClient" label="Internal" name="internal">
             <el-card>
               <h4 class="form--label">Project Info</h4>
               <div>
-                <el-row>
+                <el-row type="flex" class="row-bg" justify="space-between">
                   <el-col :lg="4">
                     <el-form-item prop="project_code">
                       <el-select v-model="projectObj.project_code" @change="handleProjectChange"
@@ -242,6 +242,10 @@
                                    :value="projectCode" :key="index"/>
                       </el-select>
                     </el-form-item>
+                  </el-col>
+
+                  <el-col :lg="2">
+                    <el-button type="primary" @click="goToHistory">History</el-button>
                   </el-col>
                 </el-row>
 
@@ -426,6 +430,7 @@
         loading: false,
         dialogVisible: false,
         change_notes: '',
+        activeTab: 'event',
         rules: {
           requestor_name: [requiredValidator],
           phone: [requiredValidator],
@@ -470,16 +475,19 @@
         this.loading = true
         fetchEvent(this.eventId).then(event => {
           this.eventObj = event
-          if (event.project) {
-            fetchProject(event.project).then(project => {
-              this.projectObj = project
-              this.contacts = project.contacts
-              this.loading = false
-            })
-          }
           if (this.eventObj.presenters == null) this.eventObj.presenters = []
           this.loading = false
         })
+      },
+      getProject() {
+        if (this.eventObj.project && this.activeTab === 'internal') {
+          this.loading = true
+          fetchProject(this.eventObj.project).then(project => {
+            this.projectObj = project
+            this.contacts = project.contacts
+            this.loading = false
+          })
+        }
       },
       handleUpdate() {
         this.$refs.form.validate(success => {
@@ -562,6 +570,12 @@
           client: 'biogen'
         }).then(response => {
           this.loading = false
+        })
+      },
+      goToHistory() {
+        this.$router.push({
+          name: 'biogenEventHistory',
+          params: { eventId: this.eventId }
         })
       }
     }

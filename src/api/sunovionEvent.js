@@ -17,6 +17,21 @@ export function fetchEvent(eventId) {
   })
 }
 
+export function fetchEventHistory(eventId) {
+  return request({
+    url: resourceURL + eventId + '/history/',
+    method: 'get'
+  })
+}
+
+export function revertEvent(eventId, data) {
+  return request({
+    url: resourceURL + eventId + '/revert/',
+    method: 'post',
+    data
+  })
+}
+
 export function createEvent(data) {
   return request({
     url: resourceURL,

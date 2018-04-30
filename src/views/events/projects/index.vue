@@ -6,7 +6,7 @@
       </el-input>
 
 
-      <el-select @change='handleFilter' style="width: 140px" class="filter-item" v-model="listQuery.ordering">
+      <el-select @change='handleFilter' class="filter-item" v-model="listQuery.ordering">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
         </el-option>
       </el-select>
@@ -112,7 +112,7 @@
           search: '',
           page: 1,
           ordering: '-created',
-          limit: 20
+          limit: 10
         },
         sortOptions,
         textMap: {

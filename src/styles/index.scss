@@ -3,12 +3,17 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
+@import url("https://fonts.googleapis.com/css?family=Raleway");
 
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  //font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+body, button, input, optgroup, select, textarea {
+  font-family: "Raleway", sans-serif;
 }
 
 html {
@@ -80,10 +85,6 @@ a:hover {
   .form-main-container {
     padding: 40px 40px 20px 20px;
   }
-
-  //.el-select.el-select--small {
-  //  width: 100%;
-  //}
 }
 
 .form--label {
@@ -91,4 +92,19 @@ a:hover {
   margin-bottom: 15px;
 }
 
+.el-dialog__body .historic-data-table {
+  width: 100%;
+  td {
+    padding: 0 20px;
+    width: 50%;
+  }
+}
 
+.historic-data {
+  .el-dialog {
+    margin-top: 5vh !important;
+  }
+  .el-dialog__body {
+    padding: 0 20px;
+  }
+}

@@ -1,17 +1,12 @@
 <template>
   <div class="errPage-container">
-    <el-button @click="back" icon='arrow-left' class="pan-back-btn">return</el-button>
     <el-row>
       <el-col :span="12">
         <h1 class="text-jumbo text-ginormous">Oops!</h1>
-        <h4>You do not have permission to go to this page</h4>
+        <h4>Some thing is wrong. </h4>
         <ul class="list-unstyled">
-          <li>Or you can go :</li>
           <li class="link-type">
             <router-link to="/dashboard">Back to home</router-link>
-          </li>
-          <li class="link-type">
-            <router-link to="/login">Login</router-link>
           </li>
           <li class="link-type">
             <router-link to="/login">Contact administrator</router-link>
@@ -29,7 +24,7 @@
   import errGif from '@/assets/401_images/401.gif'
 
   export default {
-    name: 'page401',
+    name: 'page500',
     data() {
       return {
         errGif: errGif + '?' + +new Date()

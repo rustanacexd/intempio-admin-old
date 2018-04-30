@@ -43,6 +43,7 @@ export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   { path: '/401', component: () => import('@/views/401'), hidden: true },
+  { path: '/500', component: () => import('@/views/500'), hidden: true },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -92,6 +93,12 @@ export const asyncRouterMap = [
           icon: 'form',
           role: ['biogen']
         }
+      },
+      {
+        path: 'history/:eventId',
+        component: () => import('@/views/events/biogen/history'),
+        name: 'biogenEventHistory',
+        meta: { title: 'History', icon: 'form' }
       }
     ]
   },
@@ -132,6 +139,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/events/sunovion/edit'),
         name: 'sunovionEditEvent',
         meta: { title: 'Edit', icon: 'form' }
+      },
+      {
+        path: 'history/:eventId',
+        component: () => import('@/views/events/sunovion/history'),
+        name: 'sunovionEventHistory',
+        meta: { title: 'History', icon: 'form' }
       }
     ]
   },
