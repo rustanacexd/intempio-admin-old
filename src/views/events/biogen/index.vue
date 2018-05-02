@@ -55,7 +55,7 @@
           <template v-if="!isClient">
             <el-button size="mini" type="danger" @click="handleDelete(scope.row)">delete</el-button>
             <el-button v-if="scope.row.status === 'reviewed'" size="mini" type="success"
-                       @click="alert('not implemented yet')">submit to kf
+                       @click="handleSubmitToKF(scope.row)">submit to kf
             </el-button>
             <el-button size="mini" type="warning" @click="handleClone(scope.row)">clone</el-button>
           </template>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-  import { fetchList, deleteEvent, createEvent } from '@/api/biogenEvent'
+  import { fetchList, deleteEvent, createEvent, submitToKf } from '@/api/biogenEvent'
 
   import waves from '@/directive/waves'
 
@@ -201,6 +201,18 @@
             name: 'biogenEditEvent',
             params: { eventId: data.id }
           })
+        })
+      },
+      handleSubmitToKF(row) {
+        this.listLoading = true
+        submitToKf(row.id).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Successfully submitted to Kissflow',
+            type: 'success',
+            duration: 3000
+          })
+          this.listLoading = false
         })
       }
     }

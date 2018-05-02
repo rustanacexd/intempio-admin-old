@@ -222,7 +222,7 @@
                     <el-form-item prop="status">
                       <el-select v-model="eventObj.status" placeholder="(required)">
                         <el-option label="new" value="new"/>
-                        <el-option label="reviewed" value="reviewed"/>
+                        <el-option label="reviewed" value="reviewed" v-if="this.eventObj.project"/>
                         <el-option label="accepted" value="accepted"/>
                         <el-option label="canceled" value="canceled"/>
                       </el-select>

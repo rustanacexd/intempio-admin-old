@@ -26,7 +26,7 @@
     </el-table>
     <div class="pagination-container" style="margin-top: 25px">
       <el-pagination background @current-change="handleCurrentChange"
-                     :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
+                     :current-page="listQuery.page" :page-size="listQuery.limit"
                      layout="total, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
@@ -167,7 +167,7 @@
         listLoading: true,
         listQuery: {
           page: 1,
-          limit: 20
+          limit: 10
         },
         dialogVisible: false,
         eventObj: Object.assign({}, defaultEventObj)
@@ -183,6 +183,7 @@
           this.list = response.results
           this.total = response.count
           this.listLoading = false
+          console.log(response)
         })
       },
       handleCurrentChange(val) {

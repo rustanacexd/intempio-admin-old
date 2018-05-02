@@ -61,3 +61,11 @@ export function fetchOptions() {
     method: 'options'
   })
 }
+
+export function submitToKf(eventId) {
+  return request({
+    url: resourceURL + eventId + '/submit_to_kissflow/',
+    method: 'post'
+  })
+}
+
