@@ -17,7 +17,7 @@
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">Search
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary"
-                 icon="el-icon-edit" v-if="true">Add
+                 icon="el-icon-edit" v-if="!isClient">Add
       </el-button>
     </div>
 
