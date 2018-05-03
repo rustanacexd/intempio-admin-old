@@ -322,10 +322,10 @@
           </el-tab-pane>
         </el-tabs>
         <el-form-item class="page-component-up">
-          <el-button type="warning" @click="dialogVisible = true" icon="el-icon-edit-outline" size="large"
-                     v-if="isEdit && isClient">
-            Request Change
-          </el-button>
+          <!--<el-button type="warning" @click="dialogVisible = true" icon="el-icon-edit-outline" size="large"-->
+                     <!--v-if="isEdit && isClient">-->
+            <!--Request Change-->
+          <!--</el-button>-->
           <el-button type="primary " @click="handleUpdate" icon="el-icon-upload2" size="large"
                      v-if="isEdit && !isClient">
             Update Event
