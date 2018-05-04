@@ -212,6 +212,7 @@
             type: 'success',
             duration: 3000
           })
+          row.status = 'accepted'
           this.listLoading = false
         })
       }
